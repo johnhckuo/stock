@@ -1,0 +1,18 @@
+version: '3'
+services:
+  app:
+    build: ./example
+    command: ["rackup", "-o", "0.0.0.0"]
+    networks:
+      - example
+    ports:
+      - "9292:9292"
+    depends_on:
+      - redis
+  redis:
+    image: redis
+    networks:
+      - example
+networks:
+  example:
+    driver: bridge
