@@ -28,8 +28,8 @@ slot from different user: 50 to 120 => ok
 
 ### Query timetable by user_id
 Query user's time slots. The result should order by `start_at`.
-
-API Path: `GET /users/:user_id/timeslots`
+HTTP Method: `GET`
+Path: `/users/:user_id/time-slots`
 
 ### Response Body
 ```json
@@ -49,11 +49,12 @@ API Path: `GET /users/:user_id/timeslots`
 ]
 ```
 
+---
 
-### Create timetable by user_id
+### Create time slot by user_id
 Create a time slot given user_id, it should follow the rule mentioned.
-
-API Path: `POST /users/:user_id/timeslots`
+HTTP Method: `POST`
+Path: `/users/:user_id/time-slots`
 
 #### Request Body
 `start_at` and `end_at` are Unix epoch(the number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT))
@@ -65,14 +66,14 @@ API Path: `POST /users/:user_id/timeslots`
 }
 ```
 
+---
 
-### Delete timetable by user_id and time_slot_id
+### Delete time slot by user_id and time_slot_id
 Delete a time slot
-API Path: `DELETE /users/:user_id/timeslots/:time_slot_id`
+HTTP Method: `DELETE`
+Path: `/users/:user_id/time-slots/:time_slot_id`
 
 ## Submission
-Please
-
 Your submission should have clear instructions on how to run your code. Please put the instruction in a file named `INSTRUCTION.md`. You should provide a `docker-compose.yml` file, so tester can simply run `docker-compose up -d` to test your application.
 
 
