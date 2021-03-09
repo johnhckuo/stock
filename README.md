@@ -2,6 +2,7 @@
 > You need to implement a timetable API follow the below requirements
 
 Dummy Company wants to build a new product to help people schedule meetings. One of the critical features is to show user’s available time. Therefore, people can understand when is appropriate. After discussing with potential users and stakeholders, PM writes down the essential rules, and you’re assigned to complete this service.
+
 This is a Restful API service, the API client will send HTTP requests to this service, and it should respond with an expected response or understandable error message. This service is only accessible in the private network. We can ignore the authentication in this assignment.
 
 
