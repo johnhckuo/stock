@@ -9,6 +9,7 @@ This is a Restful API service, the API client will send HTTP requests to this se
 ## Business rules
 * `start_at` must greater than `now`.
 * `end_at` must greater than `start_at`
+* `end_at` - `start_at` must less than or equal 24 hours
 * Timeslots from the same user are not allowed to overlap
 i.e., 
 
