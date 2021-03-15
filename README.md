@@ -39,14 +39,17 @@ Path: `/users/:user_id/time-slots`
 ```json
 [
   {
+    "id": 1,
     "start_at": 1615189066,
     "end_at": 1615192666
   },
   {
+    "id": 2,
     "start_at": 1615199866,
     "end_at": 1615203466
   },
   {
+    "id": 3,
     "start_at": 1615208866,
     "end_at": 1615212466
   }
@@ -63,8 +66,9 @@ Path: `/users/:user_id/time-slots`
 #### Request Body
 `start_at` and `end_at` are Unix epoch(the number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT))
 
-"`json
+```json
 {
+  "id": 1,
   "start_at": 1615189066,
   "end_at": 1615192666
 }
@@ -77,8 +81,11 @@ Delete a time slot
 HTTP Method: `DELETE`
 Path: `/users/:user_id/time-slots/:time_slot_id`
 
+
+---
+
 ## Submission
-Your submission should have clear instructions on how to run your code. Please put the instruction in a file named `INSTRUCTION.md`. You should provide a `docker-compose.yml` file, so the tester can run `docker-compose up -d' to test your application.
+Your submission should have clear instructions on how to run your code. Please put the instruction in a file named `INSTRUCTION.md`. You should provide a `docker-compose.yml` file, so the tester can run `docker-compose up -d` to test your application.
 
 
 ## Evaluation
