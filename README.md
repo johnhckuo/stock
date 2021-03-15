@@ -32,8 +32,9 @@ slot from different user: 50 to 120 => ok
 
 ### Query timetable by user_id
 Query user's time slots. The result should order by `start_at`.
-HTTP Method: `GET`
-Path: `/users/:user_id/time-slots`
+
+* HTTP Method: `GET`
+* Path: `/users/:user_id/time-slots`
 
 ### Response Body
 ```json
@@ -60,8 +61,9 @@ Path: `/users/:user_id/time-slots`
 
 ### Create time slot by user_id
 Create a time slot given user_id, and it should follow the rule mentioned.
-HTTP Method: `POST`
-Path: `/users/:user_id/time-slots`
+
+* HTTP Method: `POST`
+* Path: `/users/:user_id/time-slots`
 
 #### Request Body
 `start_at` and `end_at` are Unix epoch(the number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT))
@@ -78,8 +80,9 @@ Path: `/users/:user_id/time-slots`
 
 ### Delete time slot by user_id and time_slot_id
 Delete a time slot
-HTTP Method: `DELETE`
-Path: `/users/:user_id/time-slots/:time_slot_id`
+
+* HTTP Method: `DELETE`
+* Path: `/users/:user_id/time-slots/:time_slot_id`
 
 
 ---
