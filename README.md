@@ -68,6 +68,9 @@ Create a time slot given user_id, and it should follow the rule mentioned.
 #### Request Body
 `start_at` and `end_at` are Unix epoch(the number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT))
 
+
+### Response Body
+
 ```json
 {
   "id": 1,
