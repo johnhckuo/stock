@@ -36,6 +36,10 @@ Query user's time slots. The result should order by `start_at`.
 * HTTP Method: `GET`
 * Path: `/users/:user_id/time-slots`
 
+### Query string
+* (optional parameter) before_timestamp: return time slots that `end_at` are greater than `before_timestamp`
+* (optional parameter) after_timestamp: return time slots that `end_at` are less than `after_timestamp`
+
 ### Response Body
 ```json
 [
