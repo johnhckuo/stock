@@ -37,8 +37,8 @@ Query user's time slots. The result should order by `start_at`.
 * Path: `/users/:user_id/time-slots`
 
 ### Query string
-* (optional parameter) before_timestamp: return time slots that `end_at` are greater than `before_timestamp`
-* (optional parameter) after_timestamp: return time slots that `end_at` are less than `after_timestamp`
+* (optional parameter) before_timestamp: return time slots that `end_at` are less than `before_timestamp`
+* (optional parameter) after_timestamp: return time slots that `end_at` are greater than `after_timestamp`
 
 ### Response Body
 ```json
