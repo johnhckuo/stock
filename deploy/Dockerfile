@@ -1,13 +1,6 @@
-FROM ruby:2.6.6
+# Golang Server's Dockerfile
+FROM golang:1.14.6-alpine
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN apk add --no-cache git
 
-RUN gem install bundler:2.1.4
-
-COPY ./Gemfile /usr/src/app/Gemfile
-COPY ./Gemfile.lock /usr/src/app/Gemfile.lock
-
-RUN bundle install
-
-COPY ./ /usr/src/app
+RUN go get github.com/lib/pq

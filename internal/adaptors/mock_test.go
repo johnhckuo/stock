@@ -1,17 +1,16 @@
-package test
+package adaptors
 
 import (
-	"codementordev/hello-johnhckuo/internal/adaptors"
 	"testing"
 	"time"
 )
 
-var mockDB adaptors.DB
+var mockDB DB
 var userId int64
 var timeId int64
 
 func TestCreateUser(t *testing.T) {
-	mockDB = adaptors.NewMock()
+	mockDB = NewMock()
 	var err error
 	userId, err = mockDB.CreateUser("john")
 	if err != nil {
