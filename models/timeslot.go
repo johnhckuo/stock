@@ -33,7 +33,6 @@ type Timeslot struct {
 
 	// user Id
 	// Required: true
-	// Min Length: 1
 	UserID *int64 `json:"userId"`
 }
 
