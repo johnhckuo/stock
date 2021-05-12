@@ -28,10 +28,13 @@ TimeSlot{
 NA, because RDBMS is being chosen in advance
 
 ### Simple architecture
-(client) -write request-> (api server) –update cache-> (memcache) –update in DB-> (PostgreSQL)
-(client) -read request-> (api server) -read cache-> (memcache)
+(client) -write request-> (api server) –update in DB-> (PostgreSQL)
+(client) -read request-> (api server) -read from DB-> (PostgreSQL)
 
-we use memcache with write through cache strategy since we know that the number of read request will be more than write request, so sacrificing the performance of write for the sake of higher reading speed is reasonable in my humble opinion :)
+~~we use memcache with write through cache strategy since we know that the number of read request will be more than write request, so sacrificing the performance of write for the sake of higher reading speed is reasonable~~
+I've decided to abandon cache here since the key of cache will be userid & value will be all the timeslots that belong to this user.
+if a user holds lots of time slots and update it frequently, system memory might get overloaded. and the expiration time of each cache will be quite long because we can't restrict user from adding timeslot only in certain time period. 
+Setting clustered index at both start_time & end_time in SQL will give us a huge boost for reading data & ranged query as well.
 
 ## Setup
 

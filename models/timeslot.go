@@ -34,7 +34,7 @@ type Timeslot struct {
 	// user Id
 	// Required: true
 	// Min Length: 1
-	UserID *string `json:"userId"`
+	UserID *int64 `json:"userId"`
 }
 
 // Validate validates this timeslot
@@ -80,10 +80,6 @@ func (m *Timeslot) validateStartAt(formats strfmt.Registry) error {
 func (m *Timeslot) validateUserID(formats strfmt.Registry) error {
 
 	if err := validate.Required("userId", "body", m.UserID); err != nil {
-		return err
-	}
-
-	if err := validate.MinLength("userId", "body", *m.UserID, 1); err != nil {
 		return err
 	}
 

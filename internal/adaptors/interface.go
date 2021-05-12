@@ -1,10 +1,10 @@
-package adaptor
+package adaptors
 
-import "codementordev/hello-johnhckuo/internal/models"
+import "codementordev/hello-johnhckuo/models"
 
 type DB interface {
-	GetTimeSlots(userId string, endAt int64) ([]models.TimeSlot, error)
-	AddTimeSlot(userId string, newTime models.TimeSlot) (models.TimeSlot, error)
-	DeleteTimeSlot(userId string, timeId int) (bool, error)
+	GetTimeslots(userId, before, after int64) ([]models.Timeslot, error)
+	AddTimeslot(userId, startAt, endAt int64) (models.Timeslot, error)
+	DeleteTimeslot(userId, timeId int64) (bool, error)
 	CreateUser(name string) (int64, error)
 }

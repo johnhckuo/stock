@@ -125,8 +125,8 @@ definitions:
         format: int64
         readOnly: true
       userId:
-        type: string
-        minLength: 1
+        type: integer
+        format: int64
       startAt:
         type: integer
         format: int64

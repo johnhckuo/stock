@@ -9,7 +9,7 @@ func TestGetTimeSlots(t *testing.T) {
 }
 
 func TestPostTimeSlot(t *testing.T) {
-	t.Errorf("Error :)")
+	t.Log("test")
 }
 
 func TestDeleteTimeSlot(t *testing.T) {

@@ -1,4 +1,4 @@
-package adaptor
+package adaptors
 
 type Postgres struct {
 }
