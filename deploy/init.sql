@@ -15,7 +15,7 @@ CREATE TABLE Timeslots (
     StartAt bigint NOT NULL,
     EndAt bigint NOT NULL,
     UserId bigint,
-    PRIMARY KEY(ID),
+    PRIMARY KEY(ID, StartAt, Endat),
     CONSTRAINT fk_id
       FOREIGN KEY(UserId) 
 	  REFERENCES Users(ID)
