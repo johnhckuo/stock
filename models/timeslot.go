@@ -21,6 +21,7 @@ type Timeslot struct {
 
 	// end at
 	// Required: true
+	// Minimum: 1
 	EndAt *int64 `json:"endAt"`
 
 	// id
@@ -29,6 +30,7 @@ type Timeslot struct {
 
 	// start at
 	// Required: true
+	// Minimum: 1
 	StartAt *int64 `json:"startAt"`
 
 	// user Id
@@ -64,12 +66,20 @@ func (m *Timeslot) validateEndAt(formats strfmt.Registry) error {
 		return err
 	}
 
+	if err := validate.MinimumInt("endAt", "body", *m.EndAt, 1, false); err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func (m *Timeslot) validateStartAt(formats strfmt.Registry) error {
 
 	if err := validate.Required("startAt", "body", m.StartAt); err != nil {
+		return err
+	}
+
+	if err := validate.MinimumInt("startAt", "body", *m.StartAt, 1, false); err != nil {
 		return err
 	}
 

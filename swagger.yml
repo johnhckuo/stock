@@ -130,9 +130,11 @@ definitions:
       startAt:
         type: integer
         format: int64
+        minimum: 1
       endAt:
         type: integer
         format: int64
+        minimum: 1
   User:
     type: object
     required:
