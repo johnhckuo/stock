@@ -12,6 +12,8 @@ schemes:
 paths:
   /users/{username}:
     post:
+      produces:
+      - application/json
       description: Add new user
       tags:
         - timeslot
@@ -33,6 +35,8 @@ paths:
             $ref: "#/definitions/Error"
   /users/{user_id}/time-slots:
     get:
+      produces:
+      - application/json
       description: Retrieve time slots based on userId & endAt filter
       tags:
         - timeslot
@@ -64,6 +68,10 @@ paths:
           schema:
             $ref: "#/definitions/Error"
     post:
+      produces:
+      - application/json
+      consumes:
+      - application/json
       description: Add new time slot and return time slot id
       tags:
         - timeslot

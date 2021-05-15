@@ -14,6 +14,7 @@ services:
   #     - DB_NAME=timetable
   #     - DB_USER=user
   #     - DB_PASSWD=mysecretpassword
+  #     - DB_MODE=MOCK
   #   depends_on:
   #     - db
   #   entrypoint: go run cmd/codementordev-hello-johnhckuo-server/main.go --port=8080

@@ -9,22 +9,22 @@ import (
 type Mock struct {
 }
 
-var data map[int64][]models.Timeslot
+var data map[int64][]*models.Timeslot
 var users []models.User
 var dataCounter int64
 var userCounter int64
 
 func NewMock() *Mock {
-	data = make(map[int64][]models.Timeslot)
+	data = make(map[int64][]*models.Timeslot)
 	return &Mock{}
 }
 
-func (m *Mock) GetTimeslots(userId, before, after int64) ([]models.Timeslot, error) {
+func (m *Mock) GetTimeslots(userId, before, after int64) ([]*models.Timeslot, error) {
 	if before == 0 && after == 0 {
 		return data[userId], nil
 	}
 
-	var candidates []models.Timeslot
+	var candidates []*models.Timeslot
 	for _, slot := range data[userId] {
 		var isCandidate bool = true
 		if before != 0 && *slot.EndAt > before {
@@ -42,9 +42,9 @@ func (m *Mock) GetTimeslots(userId, before, after int64) ([]models.Timeslot, err
 	return candidates, nil
 }
 
-func (m *Mock) AddTimeslot(userId, startAt, endAt int64) (models.Timeslot, error) {
+func (m *Mock) AddTimeslot(userId, startAt, endAt int64) (*models.Timeslot, error) {
 	if startAt > endAt {
-		return models.Timeslot{}, errors.New("end date cannot be ealier than start date")
+		return &models.Timeslot{}, errors.New("end date cannot be ealier than start date")
 	}
 
 	for _, val := range users {
@@ -52,17 +52,17 @@ func (m *Mock) AddTimeslot(userId, startAt, endAt int64) (models.Timeslot, error
 			//(StartA <= EndB)  and  (EndA >= StartB)
 			for _, slot := range data[userId] {
 				if startAt < *slot.EndAt && endAt > *slot.StartAt {
-					return models.Timeslot{}, errors.New("timestamp overlap")
+					return &models.Timeslot{}, errors.New("timestamp overlap")
 				}
 			}
 			atomic.AddInt64(&dataCounter, 1)
-			newTimeslot := models.Timeslot{UserID: &userId, EndAt: &endAt, StartAt: &startAt, ID: dataCounter}
+			newTimeslot := &models.Timeslot{UserID: &userId, EndAt: &endAt, StartAt: &startAt, ID: dataCounter}
 			data[userId] = append(data[userId], newTimeslot)
 			return newTimeslot, nil
 		}
 	}
 
-	return models.Timeslot{}, errors.New("user id doesn't exists")
+	return &models.Timeslot{}, errors.New("user id doesn't exists")
 }
 
 func (m *Mock) DeleteTimeslot(userId, timeId int64) (bool, error) {

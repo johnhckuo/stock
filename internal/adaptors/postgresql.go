@@ -33,9 +33,9 @@ func NewPostgres() (*Postgres, error) {
 	return &Postgres{db: db}, nil
 }
 
-func (m *Postgres) GetTimeslots(userId, before, after int64) ([]models.Timeslot, error) {
+func (m *Postgres) GetTimeslots(userId, before, after int64) ([]*models.Timeslot, error) {
 
-	timeslots := []models.Timeslot{}
+	timeslots := []*models.Timeslot{}
 	mappedInput := map[string]interface{}{"userId": userId}
 
 	statement := "SELECT * FROM timeslots WHERE UserId=:userId"
@@ -51,35 +51,35 @@ func (m *Postgres) GetTimeslots(userId, before, after int64) ([]models.Timeslot,
 
 	rows, err := m.db.NamedQuery(statement, mappedInput)
 	if err != nil {
-		return []models.Timeslot{}, err
+		return []*models.Timeslot{}, err
 	}
 	for rows.Next() {
 		var temp models.Timeslot
 		err := rows.StructScan(&temp)
 		if err != nil {
-			return []models.Timeslot{}, err
+			return []*models.Timeslot{}, err
 		}
-		timeslots = append(timeslots, temp)
+		timeslots = append(timeslots, &temp)
 	}
 
 	return timeslots, nil
 }
 
-func (m *Postgres) AddTimeslot(userId, startAt, endAt int64) (models.Timeslot, error) {
+func (m *Postgres) AddTimeslot(userId, startAt, endAt int64) (*models.Timeslot, error) {
 	if startAt == 0 || endAt == 0 {
-		return models.Timeslot{}, errors.New("Insufficient paramenters")
+		return &models.Timeslot{}, errors.New("Insufficient paramenters")
 	}
 	var newId int64
 	err := m.db.Get(&newId, `SELECT add_timeslot(user_id := $1, start_at := $2, end_at := $3);`, userId, startAt, endAt)
 	if err != nil {
-		return models.Timeslot{}, err
+		return &models.Timeslot{}, err
 	}
 
 	if newId == -1 {
-		return models.Timeslot{}, errors.New("timeslot overlapped")
+		return &models.Timeslot{}, errors.New("timeslot overlapped")
 	}
 
-	return models.Timeslot{ID: newId, UserID: &userId, StartAt: &startAt, EndAt: &endAt}, nil
+	return &models.Timeslot{ID: newId, UserID: &userId, StartAt: &startAt, EndAt: &endAt}, nil
 }
 
 func (m *Postgres) DeleteTimeslot(userId, timeId int64) (bool, error) {

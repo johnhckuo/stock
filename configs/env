@@ -2,3 +2,4 @@ export DB_HOST=127.0.0.1
 export DB_NAME=timetable
 export DB_USER=user
 export DB_PASSWD=mysecretpassword
+export DB_MODE=MOCK

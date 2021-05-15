@@ -44,7 +44,19 @@ func configureAPI(api *operations.CodementordevHelloJohnhckuoAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.TimeslotAddTimeslotHandler = timeslot.AddTimeslotHandlerFunc(func(params timeslot.AddTimeslotParams) middleware.Responder {
-		return middleware.NotImplemented("operation timeslot.AddTimeslot has not yet been implemented")
+		var timeslots *models.Timeslot
+		var err error
+
+		start := *params.Body.StartAt
+		end := *params.Body.EndAt
+		if start > end {
+			return timeslot.NewAddTimeslotDefault(400).WithPayload(&models.Error{Code: 400, Message: swag.String("Start timestamp cannot be greater than end timestamp")})
+		}
+		if timeslots, err = handlers.AddTimeslot(params.UserID, params.Body); err != nil {
+			return timeslot.NewAddTimeslotDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
+		}
+
+		return timeslot.NewAddTimeslotCreated().WithPayload(timeslots)
 	})
 
 	api.TimeslotAddUserHandler = timeslot.AddUserHandlerFunc(func(params timeslot.AddUserParams) middleware.Responder {
@@ -57,11 +69,32 @@ func configureAPI(api *operations.CodementordevHelloJohnhckuoAPI) http.Handler {
 	})
 
 	api.TimeslotDestroyTimeslotHandler = timeslot.DestroyTimeslotHandlerFunc(func(params timeslot.DestroyTimeslotParams) middleware.Responder {
-		return middleware.NotImplemented("operation timeslot.DestroyTimeslot has not yet been implemented")
+
+		var success bool
+		var err error
+		if success, err = handlers.DeleteTimeslot(params.UserID, params.TimeSlotID); err != nil {
+			return timeslot.NewDestroyTimeslotDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
+		}
+		if !success {
+			return timeslot.NewDestroyTimeslotDefault(400).WithPayload(&models.Error{Code: 400, Message: swag.String("Delete failed, please check if user id is correct")})
+		}
+		return timeslot.NewDestroyTimeslotNoContent()
 	})
 
 	api.TimeslotGetTimeslotHandler = timeslot.GetTimeslotHandlerFunc(func(params timeslot.GetTimeslotParams) middleware.Responder {
-		return middleware.NotImplemented("operation timeslot.GetTimeslot has not yet been implemented")
+		var timeslots []*models.Timeslot
+		var err error
+
+		before := *params.BeforeTimestamp
+		after := *params.AfterTimestamp
+		if after > before {
+			return timeslot.NewGetTimeslotDefault(400).WithPayload(&models.Error{Code: 400, Message: swag.String("Before_timestamp cannot be smaller than after_timestamp")})
+		}
+		if timeslots, err = handlers.GetTimeslots(params.UserID, before, after); err != nil {
+			return timeslot.NewGetTimeslotDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
+		}
+
+		return timeslot.NewGetTimeslotOK().WithPayload(timeslots)
 	})
 
 	api.PreServerShutdown = func() {}
