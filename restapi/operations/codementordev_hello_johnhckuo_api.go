@@ -85,10 +85,12 @@ type CodementordevHelloJohnhckuoAPI struct {
 	BearerAuthenticator func(string, security.ScopedTokenAuthentication) runtime.Authenticator
 
 	// JSONConsumer registers a consumer for the following mime types:
+	//   - application/json
 	//   - application/timeslot.v1+json
 	JSONConsumer runtime.Consumer
 
 	// JSONProducer registers a producer for the following mime types:
+	//   - application/json
 	//   - application/timeslot.v1+json
 	JSONProducer runtime.Producer
 
@@ -218,6 +220,8 @@ func (o *CodementordevHelloJohnhckuoAPI) ConsumersFor(mediaTypes []string) map[s
 	result := make(map[string]runtime.Consumer, len(mediaTypes))
 	for _, mt := range mediaTypes {
 		switch mt {
+		case "application/json":
+			result["application/json"] = o.JSONConsumer
 		case "application/timeslot.v1+json":
 			result["application/timeslot.v1+json"] = o.JSONConsumer
 		}
@@ -235,6 +239,8 @@ func (o *CodementordevHelloJohnhckuoAPI) ProducersFor(mediaTypes []string) map[s
 	result := make(map[string]runtime.Producer, len(mediaTypes))
 	for _, mt := range mediaTypes {
 		switch mt {
+		case "application/json":
+			result["application/json"] = o.JSONProducer
 		case "application/timeslot.v1+json":
 			result["application/timeslot.v1+json"] = o.JSONProducer
 		}

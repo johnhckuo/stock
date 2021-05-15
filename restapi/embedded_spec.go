@@ -37,6 +37,9 @@ func init() {
     "/users/{user_id}/time-slots": {
       "get": {
         "description": "Retrieve time slots based on userId \u0026 endAt filter",
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "timeslot"
         ],
@@ -82,6 +85,12 @@ func init() {
       },
       "post": {
         "description": "Add new time slot and return time slot id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "timeslot"
         ],
@@ -157,6 +166,9 @@ func init() {
     "/users/{username}": {
       "post": {
         "description": "Add new user",
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "timeslot"
         ],
@@ -213,7 +225,8 @@ func init() {
       "properties": {
         "endAt": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "minimum": 1
         },
         "id": {
           "type": "integer",
@@ -222,11 +235,12 @@ func init() {
         },
         "startAt": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "minimum": 1
         },
         "userId": {
-          "type": "string",
-          "minLength": 1
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
@@ -269,6 +283,9 @@ func init() {
     "/users/{user_id}/time-slots": {
       "get": {
         "description": "Retrieve time slots based on userId \u0026 endAt filter",
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "timeslot"
         ],
@@ -314,6 +331,12 @@ func init() {
       },
       "post": {
         "description": "Add new time slot and return time slot id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "timeslot"
         ],
@@ -389,6 +412,9 @@ func init() {
     "/users/{username}": {
       "post": {
         "description": "Add new user",
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "timeslot"
         ],
@@ -445,7 +471,8 @@ func init() {
       "properties": {
         "endAt": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "minimum": 1
         },
         "id": {
           "type": "integer",
@@ -454,11 +481,12 @@ func init() {
         },
         "startAt": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "minimum": 1
         },
         "userId": {
-          "type": "string",
-          "minLength": 1
+          "type": "integer",
+          "format": "int64"
         }
       }
     },

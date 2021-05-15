@@ -85,11 +85,20 @@ func configureAPI(api *operations.CodementordevHelloJohnhckuoAPI) http.Handler {
 		var timeslots []*models.Timeslot
 		var err error
 
-		before := *params.BeforeTimestamp
-		after := *params.AfterTimestamp
-		if after > before {
+		var before, after int64
+
+		if params.BeforeTimestamp != nil {
+			before = *params.BeforeTimestamp
+		}
+
+		if params.BeforeTimestamp != nil {
+			after = *params.AfterTimestamp
+		}
+
+		if after != 0 && before != 0 && after > before {
 			return timeslot.NewGetTimeslotDefault(400).WithPayload(&models.Error{Code: 400, Message: swag.String("Before_timestamp cannot be smaller than after_timestamp")})
 		}
+
 		if timeslots, err = handlers.GetTimeslots(params.UserID, before, after); err != nil {
 			return timeslot.NewGetTimeslotDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
 		}
