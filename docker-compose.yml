@@ -1,23 +1,23 @@
 version: "3.5"
 services:
-  server:
-    build:
-      context: ./deploy
-      dockerfile: Dockerfile
-    working_dir: /server
-    volumes:
-      - .:/server
-    ports:
-      - "8080:8080"
-    environment:
-      - DB_HOST=db
-      - DB_NAME=postgres
-      - DB_USER=user
-      - DB_PASSWD=mysecretpassword
-    depends_on:
-      - db
-    entrypoint: go run cmd/codementordev-hello-johnhckuo-server/main.go --port=8080
-    restart: always
+  # server:
+  #   build:
+  #     context: ./deploy
+  #     dockerfile: Dockerfile
+  #   working_dir: /server
+  #   volumes:
+  #     - .:/server
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - DB_HOST=db
+  #     - DB_NAME=timetable
+  #     - DB_USER=user
+  #     - DB_PASSWD=mysecretpassword
+  #   depends_on:
+  #     - db
+  #   entrypoint: go run cmd/codementordev-hello-johnhckuo-server/main.go --port=8080
+  #   restart: always
   db:
     image: postgres:12.4-alpine
     volumes:

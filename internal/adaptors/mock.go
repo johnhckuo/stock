@@ -51,7 +51,7 @@ func (m *Mock) AddTimeslot(userId, startAt, endAt int64) (models.Timeslot, error
 		if val.ID == userId {
 			//(StartA <= EndB)  and  (EndA >= StartB)
 			for _, slot := range data[userId] {
-				if startAt <= *slot.EndAt && endAt >= *slot.StartAt {
+				if startAt < *slot.EndAt && endAt > *slot.StartAt {
 					return models.Timeslot{}, errors.New("timestamp overlap")
 				}
 			}
