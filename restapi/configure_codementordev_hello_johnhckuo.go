@@ -4,6 +4,7 @@ package restapi
 
 import (
 	"crypto/tls"
+	"log"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -33,11 +34,11 @@ func configureAPI(api *operations.CodementordevHelloJohnhckuoAPI) http.Handler {
 	// Expected interface func(string, ...interface{})
 	//
 	// Example:
-	// api.Logger = log.Printf
+	api.Logger = log.Printf
 
 	api.UseSwaggerUI()
 	// To continue using redoc as your UI, uncomment the following line
-	// api.UseRedoc()
+	api.UseRedoc()
 
 	api.JSONConsumer = runtime.JSONConsumer()
 

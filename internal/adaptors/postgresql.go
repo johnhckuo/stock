@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jmoiron/sqlx"
+	"log"
 
+	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
 
@@ -28,13 +29,13 @@ func NewPostgres() (*Postgres, error) {
 	if err = db.Ping(); err != nil {
 		return nil, err
 	}
-	fmt.Println("Successfully created connection to database")
+	log.Printf("Successfully created connection to database")
 
 	return &Postgres{db: db}, nil
 }
 
 func (m *Postgres) GetTimeslots(userId, before, after int64) ([]*models.Timeslot, error) {
-
+	log.Printf("GetTimeslots user_id: %v, before: %v, after: %v", userId, before, after)
 	timeslots := []*models.Timeslot{}
 	mappedInput := map[string]interface{}{"userId": userId}
 
@@ -62,10 +63,13 @@ func (m *Postgres) GetTimeslots(userId, before, after int64) ([]*models.Timeslot
 		timeslots = append(timeslots, &temp)
 	}
 
+	log.Printf("Timeslots successfully retrieved=> User_ID: %v, timeslots retrieved: %v", userId, len(timeslots))
+
 	return timeslots, nil
 }
 
 func (m *Postgres) AddTimeslot(userId, startAt, endAt int64) (*models.Timeslot, error) {
+	log.Printf("AddTimeslot user_id: %v, start_at: %v, end_at: %v", userId, startAt, endAt)
 	if startAt == 0 || endAt == 0 {
 		return &models.Timeslot{}, errors.New("Insufficient paramenters")
 	}
@@ -79,10 +83,13 @@ func (m *Postgres) AddTimeslot(userId, startAt, endAt int64) (*models.Timeslot, 
 		return &models.Timeslot{}, errors.New("timeslot overlapped")
 	}
 
+	log.Printf("Timeslot successfully added=> User_ID: %v, startAt: %v, EndAt: %v", userId, startAt, endAt)
+
 	return &models.Timeslot{ID: newId, UserID: userId, StartAt: &startAt, EndAt: &endAt}, nil
 }
 
 func (m *Postgres) DeleteTimeslot(userId, timeId int64) (bool, error) {
+	log.Printf("DeleteTimeslot user_id: %v, time_id: %v", userId, timeId)
 	res, err := m.db.NamedExec(`DELETE FROM timeslots WHERE ID=:timeId AND UserID=:userId;`,
 		map[string]interface{}{
 			"timeId": timeId,
@@ -96,6 +103,8 @@ func (m *Postgres) DeleteTimeslot(userId, timeId int64) (bool, error) {
 	if count == 0 || err != nil {
 		return false, err
 	}
+
+	log.Printf("Timeslot successfully deleted=> User_ID: %v, Time_ID: %v", userId, timeId)
 
 	return true, nil
 }
@@ -111,11 +120,15 @@ func (m *Postgres) CreateUser(name string) (int64, error) {
 	// }
 	// tx.Commit()
 
+	log.Printf("CreateUser name: %v", name)
+
 	var id int64
 	err := m.db.QueryRowx(`INSERT INTO users (Name) VALUES ($1) RETURNING ID`, name).Scan(&id)
 	if err != nil {
 		return -1, err
 	}
+
+	log.Printf("User successfully created=> ID: %v, name: %v", id, name)
 
 	return id, nil
 }

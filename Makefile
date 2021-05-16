@@ -17,6 +17,9 @@ swagger:
 	swagger generate server -A codementordev/hello-johnhckuo
 
 docs:
+	swagger serve swagger.yml
+
+spec:
 	swagger generate markdown -f ./swagger.yml --output ./spec.md
 
 	
