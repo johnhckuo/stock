@@ -13,7 +13,7 @@ Assuming this dummy timetable will have a Read/Write ratio of 10:1, meaning this
 ### DB Schema
 ```
 User{
-    id int64
+    id int64(index)
     name string
 }
 
