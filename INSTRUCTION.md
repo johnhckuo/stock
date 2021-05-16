@@ -62,25 +62,28 @@ make unit_test
 
 ## Setup
 
-### To run locally
-```bash
-# Retrieved all required go module
-go get
-
-# run the application locally at port 8080
-make run
-```
-
-### To run in docker
 ```bash
 # build application as docker image first
 make docker
 
 # spin up necessary containers
 docker-compose up
+
+# after seeing this log: `Serving codementordev hello johnhckuo at http://[::]:8080`
+# then you are good to go!
+curl --location --request POST 'http://127.0.0.1:8080/users/john'
+
+# clean up
+docker-compose down
 ```
 
 ## Test
 
 1. You can run `make unit_test` for handler testing
 1. Import `test/Timetable.postman_collection.json` and test api endpoint in postman
+
+## Powered by
+- [Go Swagger](https://goswagger.io/)
+- [Testify](https://github.com/stretchr/testify)
+- [GoDotenv](https://pkg.go.dev/github.com/joho/godotenv?utm_source=godoc)
+- [Sqlx](https://jmoiron.github.io/sqlx/)
