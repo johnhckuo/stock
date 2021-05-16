@@ -72,7 +72,8 @@ make docker
 # spin up necessary containers
 docker-compose up
 
-# after seeing this log: `Serving codementordev hello johnhckuo at http://[::]:8080`
+# after seeing this log: 
+> Serving codementordev hello johnhckuo at http://[::]:8080
 # then you are good to go!
 curl --location --request POST 'http://127.0.0.1:8080/users/john'
 
