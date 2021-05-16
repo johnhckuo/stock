@@ -11,7 +11,7 @@ Assuming this dummy timetable will have a Read/Write ratio of 10:1, meaning this
 - func createUser(name string) int64
 
 ### DB Schema
-
+```
 User{
     id int64
     name string
@@ -23,7 +23,7 @@ TimeSlot{
     start_at int64(index)
     end_at int64(index)
 }
-
+```
 ### Choice of DB type
 NA, because RDBMS is being chosen in advance
 
@@ -36,7 +36,7 @@ I've decided to abandon cache here since the key of cache will be userid & value
 if a user holds lots of time slots and update it frequently, system memory might get overloaded. and the expiration time of each cache will be quite long because we can't restrict user from adding timeslot only in certain time period. 
 Setting clustered index at both start_time & end_time in SQL will give us a huge boost for reading data & ranged query as well.
 
-## Setup
+## Command
 
 ```bash
 # build this application as docker image
@@ -58,7 +58,7 @@ make spec
 make unit_test
 ```
 
-## Run
+## Setup
 
 ### To run locally
 ```bash
@@ -80,5 +80,5 @@ docker-compose up
 
 ## Test
 
-### 1. You can run `make unit_test` for handler testing
-### 2. Import `test/Timetable.postman_collection.json` and test api endpoint in postman
+1. You can run `make unit_test` for handler testing
+1. Import `test/Timetable.postman_collection.json` and test api endpoint in postman
