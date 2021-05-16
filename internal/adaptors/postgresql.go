@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 
 	"log"
 
@@ -70,8 +71,8 @@ func (m *Postgres) GetTimeslots(userId, before, after int64) ([]*models.Timeslot
 
 func (m *Postgres) AddTimeslot(userId, startAt, endAt int64) (*models.Timeslot, error) {
 	log.Printf("AddTimeslot user_id: %v, start_at: %v, end_at: %v", userId, startAt, endAt)
-	if startAt == 0 || endAt == 0 {
-		return &models.Timeslot{}, errors.New("Insufficient paramenters")
+	if startAt <= 0 || endAt <= 0 {
+		return &models.Timeslot{}, errors.New("Invalid paramenters")
 	}
 	var newId int64
 	err := m.db.Get(&newId, `SELECT add_timeslot(user_id := $1, start_at := $2, end_at := $3);`, userId, startAt, endAt)
@@ -89,6 +90,9 @@ func (m *Postgres) AddTimeslot(userId, startAt, endAt int64) (*models.Timeslot, 
 }
 
 func (m *Postgres) DeleteTimeslot(userId, timeId int64) (bool, error) {
+	if userId <= 0 || timeId <= 0 {
+		return false, errors.New("Invalid parameters")
+	}
 	log.Printf("DeleteTimeslot user_id: %v, time_id: %v", userId, timeId)
 	res, err := m.db.NamedExec(`DELETE FROM timeslots WHERE ID=:timeId AND UserID=:userId;`,
 		map[string]interface{}{
@@ -119,6 +123,9 @@ func (m *Postgres) CreateUser(name string) (int64, error) {
 	// 	return -1, err
 	// }
 	// tx.Commit()
+	if strings.TrimSpace(name) == "" {
+		return -1, errors.New("Name cannot be empty")
+	}
 
 	log.Printf("CreateUser name: %v", name)
 

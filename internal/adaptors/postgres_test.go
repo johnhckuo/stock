@@ -1,7 +1,7 @@
 package adaptors
 
 import (
-	"fmt"
+	"os"
 	"testing"
 	"time"
 
@@ -11,21 +11,51 @@ import (
 var psql DB
 var psql_timeId, psql_timeId2, psql_timeId3 int64
 
+func init() {
+	os.Setenv("DB_HOST", "127.0.0.1")
+	os.Setenv("DB_NAME", "timetable")
+	os.Setenv("DB_USER", "user")
+	os.Setenv("DB_PASSWD", "mysecretpassword")
+	os.Setenv("DB_MODE", "PSQL")
+}
+
+func TestConnection_PSQL_failed(t *testing.T) {
+	os.Setenv("DB_HOST", "256.0.0.2")
+	_, err := NewPostgres()
+	assert.NotNil(t, err)
+}
+
 func TestConnection_PSQL(t *testing.T) {
 	var err error
+	os.Setenv("DB_HOST", "127.0.0.1")
 	psql, err = NewPostgres()
-	if err != nil {
-		t.Errorf("Error when connecting to DB: %v", err)
-		return
-	}
+	assert.Nil(t, err)
 	t.Logf("DB connected")
+	if err != nil {
+		t.Fatalf("No DB connection established: %v", err.Error())
+	}
+}
+
+func TestCreateUser_PSQL_failed(t *testing.T) {
+	var err error
+	userId, err = psql.CreateUser("")
+	assert.NotNil(t, err)
 }
 
 func TestCreateUser_PSQL(t *testing.T) {
 	var err error
 	userId, err = psql.CreateUser("john")
 	assert.Nil(t, err)
-	fmt.Printf("User created %v \n", userId)
+}
+
+func TestCreateTimeslot_PSQL_failed1(t *testing.T) {
+	_, err := psql.AddTimeslot(userId, 0, 0)
+	assert.NotNil(t, err)
+}
+
+func TestCreateTimeslot_PSQL_failed2(t *testing.T) {
+	_, err := psql.AddTimeslot(userId, -1, -1)
+	assert.NotNil(t, err)
 }
 
 func TestCreateTimeslot_PSQL(t *testing.T) {
@@ -105,6 +135,11 @@ func TestDeleteTimeslot_PSQL(t *testing.T) {
 	success, err := psql.DeleteTimeslot(userId, psql_timeId)
 	assert.Nil(t, err)
 	assert.Equal(t, true, success, "delete successfully")
+}
+
+func TestDeleteTimeslot_PSQL_failed(t *testing.T) {
+	_, err := psql.DeleteTimeslot(-1, 01201240)
+	assert.NotNil(t, err)
 }
 
 func TestGetTimeslot5_PSQL(t *testing.T) {

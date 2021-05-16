@@ -18,6 +18,20 @@ func TestCreateUser(t *testing.T) {
 	assert.Nil(t, err)
 }
 
+func TestCreateTimeslot_failed1(t *testing.T) {
+	in, _ := time.Parse(time.RFC822, "01 Jan 16 10:00 UTC")
+	out, _ := time.Parse(time.RFC822, "01 Jan 15 10:00 UTC")
+	_, err := mockDB.AddTimeslot(userId, in.Unix(), out.Unix())
+	assert.NotNil(t, err)
+}
+
+func TestCreateTimeslot_failed2(t *testing.T) {
+	in, _ := time.Parse(time.RFC822, "01 Jan 16 10:00 UTC")
+	out, _ := time.Parse(time.RFC822, "01 Jan 15 10:00 UTC")
+	_, err := mockDB.AddTimeslot(-1, in.Unix(), out.Unix())
+	assert.NotNil(t, err)
+}
+
 func TestCreateTimeslot(t *testing.T) {
 	in, _ := time.Parse(time.RFC822, "01 Jan 15 10:00 UTC")
 	out, _ := time.Parse(time.RFC822, "01 Jan 16 10:00 UTC")
@@ -91,4 +105,9 @@ func TestGetTimeslot5(t *testing.T) {
 	timeslots, err := mockDB.GetTimeslots(userId, 0, 0)
 	assert.Nil(t, err)
 	assert.Equal(t, 2, len(timeslots), "should have none timeslots")
+}
+
+func TestDeleteTimeslot_failed(t *testing.T) {
+	_, err := mockDB.DeleteTimeslot(-1, timeId)
+	assert.NotNil(t, err)
 }

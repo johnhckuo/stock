@@ -38,4 +38,47 @@ Setting clustered index at both start_time & end_time in SQL will give us a huge
 
 ## Setup
 
+```bash
+# build this application as docker image
+make docker
+
+# run locally at port 8080
+make run
+
+# generate http handler based on swagger.yaml
+make swagger
+
+# show api docs in browser
+make docs
+
+# generate api specs in Markdown
+make spec
+
+# start testing and output coverage
+make unit_test
+```
+
 ## Run
+
+### To run locally
+```bash
+# Retrieved all required go module
+go get
+
+# run the application locally at port 8080
+make run
+```
+
+### To run in docker
+```bash
+# build application as docker image first
+make docker
+
+# spin up necessary containers
+docker-compose up
+```
+
+## Test
+
+### 1. You can run `make unit_test` for handler testing
+### 2. Import `test/Timetable.postman_collection.json` and test api endpoint in postman
