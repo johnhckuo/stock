@@ -17,9 +17,11 @@ TimeSlot manager
   * http
 
 ### Consumes
+  * application/json
   * application/timeslot.v1+json
 
 ### Produces
+  * application/json
   * application/timeslot.v1+json
 
 ## All endpoints
@@ -44,6 +46,12 @@ POST /users/{user_id}/time-slots
 ```
 
 Add new time slot and return time slot id
+
+#### Consumes
+  * application/json
+
+#### Produces
+  * application/json
 
 #### Parameters
 
@@ -86,6 +94,9 @@ POST /users/{username}
 ```
 
 Add new user
+
+#### Produces
+  * application/json
 
 #### Parameters
 
@@ -166,6 +177,9 @@ GET /users/{user_id}/time-slots
 
 Retrieve time slots based on userId & endAt filter
 
+#### Produces
+  * application/json
+
 #### Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
@@ -233,7 +247,7 @@ generic error response
 | endAt | int64 (formatted integer)| `int64` | ✓ | |  |  |
 | id | int64 (formatted integer)| `int64` |  | |  |  |
 | startAt | int64 (formatted integer)| `int64` | ✓ | |  |  |
-| userId | int64 (formatted integer)| `int64` | ✓ | |  |  |
+| userId | int64 (formatted integer)| `int64` |  | |  |  |
 
 
 
