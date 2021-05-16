@@ -16,4 +16,5 @@ spec:
 unit_test:
 	go test ./internal/adaptors/ -v -count=1 -failfast -coverprofile cover.out && go tool cover -html=internal/adaptors/cover.out
 
-	
+coverage:
+	go tool cover -html=coverage.out

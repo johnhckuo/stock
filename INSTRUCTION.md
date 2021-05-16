@@ -58,6 +58,9 @@ make spec
 
 # start testing and output coverage
 make unit_test
+
+# open test coverage profile in browser
+make coverage
 ```
 
 ## Setup
