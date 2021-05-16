@@ -79,7 +79,7 @@ func (m *Postgres) AddTimeslot(userId, startAt, endAt int64) (*models.Timeslot, 
 		return &models.Timeslot{}, errors.New("timeslot overlapped")
 	}
 
-	return &models.Timeslot{ID: newId, UserID: &userId, StartAt: &startAt, EndAt: &endAt}, nil
+	return &models.Timeslot{ID: newId, UserID: userId, StartAt: &startAt, EndAt: &endAt}, nil
 }
 
 func (m *Postgres) DeleteTimeslot(userId, timeId int64) (bool, error) {

@@ -34,8 +34,7 @@ type Timeslot struct {
 	StartAt *int64 `json:"startAt"`
 
 	// user Id
-	// Required: true
-	UserID *int64 `json:"userId"`
+	UserID int64 `json:"userId,omitempty"`
 }
 
 // Validate validates this timeslot
@@ -47,10 +46,6 @@ func (m *Timeslot) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateStartAt(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateUserID(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -80,15 +75,6 @@ func (m *Timeslot) validateStartAt(formats strfmt.Registry) error {
 	}
 
 	if err := validate.MinimumInt("startAt", "body", *m.StartAt, 1, false); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Timeslot) validateUserID(formats strfmt.Registry) error {
-
-	if err := validate.Required("userId", "body", m.UserID); err != nil {
 		return err
 	}
 

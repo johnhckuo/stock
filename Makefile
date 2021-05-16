@@ -13,8 +13,8 @@ lint:
 fmt:
 	go fmt ./...
 
-model:
-	swagger generate model --spec=swagger.yml
+swagger:
+	swagger generate server -A codementordev/hello-johnhckuo
 
 docs:
 	swagger generate markdown -f ./swagger.yml --output ./spec.md

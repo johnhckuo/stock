@@ -218,7 +218,6 @@ func init() {
     "Timeslot": {
       "type": "object",
       "required": [
-        "userId",
         "startAt",
         "endAt"
       ],
@@ -464,7 +463,6 @@ func init() {
     "Timeslot": {
       "type": "object",
       "required": [
-        "userId",
         "startAt",
         "endAt"
       ],

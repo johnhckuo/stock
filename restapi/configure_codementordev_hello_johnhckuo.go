@@ -76,7 +76,7 @@ func configureAPI(api *operations.CodementordevHelloJohnhckuoAPI) http.Handler {
 			return timeslot.NewDestroyTimeslotDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
 		}
 		if !success {
-			return timeslot.NewDestroyTimeslotDefault(400).WithPayload(&models.Error{Code: 400, Message: swag.String("Delete failed, please check if user id is correct")})
+			return timeslot.NewDestroyTimeslotDefault(400).WithPayload(&models.Error{Code: 400, Message: swag.String("Delete failed, please check if user id or time id is correct")})
 		}
 		return timeslot.NewDestroyTimeslotNoContent()
 	})
@@ -91,7 +91,7 @@ func configureAPI(api *operations.CodementordevHelloJohnhckuoAPI) http.Handler {
 			before = *params.BeforeTimestamp
 		}
 
-		if params.BeforeTimestamp != nil {
+		if params.AfterTimestamp != nil {
 			after = *params.AfterTimestamp
 		}
 

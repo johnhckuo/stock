@@ -56,7 +56,7 @@ func (m *Mock) AddTimeslot(userId, startAt, endAt int64) (*models.Timeslot, erro
 				}
 			}
 			atomic.AddInt64(&dataCounter, 1)
-			newTimeslot := &models.Timeslot{UserID: &userId, EndAt: &endAt, StartAt: &startAt, ID: dataCounter}
+			newTimeslot := &models.Timeslot{UserID: userId, EndAt: &endAt, StartAt: &startAt, ID: dataCounter}
 			data[userId] = append(data[userId], newTimeslot)
 			return newTimeslot, nil
 		}
